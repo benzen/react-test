@@ -15,7 +15,7 @@ var NewIssueForm = React.createClass({
   //},
   addIssue:function(e){
     var issue = {
-      id: IssueStore.getIssues().length,
+      id: IssueStore.getIssues().length + 1,
       title: this.refs.title.getDOMNode().value,
       code: this.refs.code.getDOMNode().value,
       status: this.refs.status.getDOMNode().value,
@@ -24,6 +24,8 @@ var NewIssueForm = React.createClass({
     };
     IssueStore.addIssue(_.extend({},issue));
     //this.setState(this.getInitialState());
+     e.stopPropagation();
+     e.preventDefault();
   },
     
   render: function() {
