@@ -4,30 +4,30 @@ var NewIssueForm = React.createClass({
   render: function() {
     return (
       <form className="new-issue-form">
-        <div class="form-group">
+        <div className="form-group">
           <label > Title: </label>
-          <input class="form-control" id="title"/>
+          <input className="form-control" id="title"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label > Code:  </label>
-          <input class="form-control" id="code"/>
+          <input className="form-control" id="code"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label > Status:  </label>
-          <input class="form-control" id="status"/>
+          <input className="form-control" id="status"/>
         </div>
 
-        <div class="form-group">
+        <div className="form-group">
           <label > Labels:  </label>
-          <input class="form-control" id="labels"/>
+          <input className="form-control" id="labels"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label > Reporter:  </label>
-          <input class="form-control" id="reporter"/>
+          <input className="form-control" id="reporter"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label > Description: </label>
-          <input class="form-control" id="description"/>
+          <input className="form-control" id="description"/>
         </div>
         <button>Add</button>
     </form>
