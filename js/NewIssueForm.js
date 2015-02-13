@@ -1,7 +1,7 @@
 var React = require("react"),
- IssueStore = require("./IssueStore"),
- _ = require("underscore")
- IssueActionCreator = require("./IssueActionCreator");
+IssueStore = require("./IssueStore"),
+_ = require("underscore")
+IssueActionCreator = require("./IssueActionCreator");
 
 var NewIssueForm = React.createClass({
   addIssue:function(e){
