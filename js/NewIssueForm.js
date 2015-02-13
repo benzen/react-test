@@ -3,19 +3,27 @@ var IssueStore = require("./IssueStore");
 var _ = require("underscore");
 
 var NewIssueForm = React.createClass({
-  getInitialState:function(){
-    return {
+  //getInitialState:function(){
+    //return {
+      //id: IssueStore.getIssues().length,
+      //title: "",
+      //code: "",
+      //status: "",
+      //labels: "",
+      //description: "",      
+    //};
+  //},
+  addIssue:function(e){
+    var issue = {
       id: IssueStore.getIssues().length,
-      title: "",
-      code: "",
-      status: "",
-      labels: "",
-      description: "",      
+      title: this.refs.title.getDOMNode().value,
+      code: this.refs.code.getDOMNode().value,
+      status: this.refs.status.getDOMNode().value,
+      labels: this.refs.labels.getDOMNode().value,
+      description: this.refs.description.getDOMNode().value,
     };
-  },
-  addIssue:function(){
-    IssueStore.addIssue(_.extend({},this.state));
-    this.setState(this.getInitialState());
+    IssueStore.addIssue(_.extend({},issue));
+    //this.setState(this.getInitialState());
   },
     
   render: function() {
@@ -23,28 +31,28 @@ var NewIssueForm = React.createClass({
       <form className="new-issue-form" onSubmit={this.addIssue}>
         <div className="form-group">
           <label > Title: </label>
-          <input className="form-control" name="title" />
+          <input className="form-control" ref="title" />
         </div>
         <div className="form-group">
           <label > Code:  </label>
-          <input className="form-control" name="code"/>
+          <input className="form-control" ref="code"/>
         </div>
         <div className="form-group">
           <label > Status:  </label>
-          <input className="form-control" name="status"/>
+          <input className="form-control" ref="status"/>
         </div>
 
         <div className="form-group">
           <label > Labels:  </label>
-          <input className="form-control" name="labels"/>
+          <input className="form-control" ref="labels"/>
         </div>
         <div className="form-group">
           <label > Reporter:  </label>
-          <input className="form-control" name="reporter"/>
+          <input className="form-control" ref="reporter"/>
         </div>
         <div className="form-group">
           <label > Description: </label>
-          <input className="form-control" id="description"/>
+          <input className="form-control" ref="description"/>
         </div>
         <button>Add</button>
     </form>

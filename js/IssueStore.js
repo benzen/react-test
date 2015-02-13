@@ -27,7 +27,7 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
   },
   
   addIssue:function(issue){
-    breakpoint;
+    //breakpoint;
     this.issues.push(issue);
     this.emitChange();
   }
