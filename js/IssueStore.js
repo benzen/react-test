@@ -24,6 +24,12 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
 
   getIssues: function(){
     return this.issues
+  },
+  
+  addIssue:function(issue){
+    breakpoint;
+    this.issues.push(issue);
+    this.emitChange();
   }
 
 });
