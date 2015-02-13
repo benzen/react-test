@@ -17,12 +17,14 @@
     "envify": "^3.2.0",
     "flux": "^2.0.1",
     "react": "^0.12.2",
+    "react-tools": "^0.12.2",
     "reactify": "^1.0.0",
     "underscore": "^1.7.0",
     "watchify": "^2.3.0"
   },
   "scripts": {
     "start": "watchify -o bundle.js -v -d js/*",
+    "test": "jest",
     "build": "NODE_ENV=production browserify . | uglifyjs -cm > bundle.min.js"
   },
   "browserify": {
@@ -30,5 +32,12 @@
       "envify",
       "reactify"
     ]
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
+  },
+  "devDependencies": {
+    "jest-cli": "^0.2.2"
   }
 }
