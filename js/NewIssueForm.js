@@ -1,19 +1,11 @@
-var React = require("react");
-var IssueStore = require("./IssueStore");
-var _ = require("underscore");
+var React = require("react"),
+ IssueStore = require("./IssueStore"),
+ _ = require("underscore")
+ IssueActionCreator = require("./IssueActionCreator");
 
 var NewIssueForm = React.createClass({
-  //getInitialState:function(){
-    //return {
-      //id: IssueStore.getIssues().length,
-      //title: "",
-      //code: "",
-      //status: "",
-      //labels: "",
-      //description: "",      
-    //};
-  //},
   addIssue:function(e){
+    
     var issue = {
       id: IssueStore.getIssues().length + 1,
       title: this.refs.title.getDOMNode().value,
@@ -22,10 +14,12 @@ var NewIssueForm = React.createClass({
       labels: this.refs.labels.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
     };
-    IssueStore.addIssue(_.extend({},issue));
-    //this.setState(this.getInitialState());
-     e.stopPropagation();
-     e.preventDefault();
+ 
+    IssueActionCreator.createNewIssue(issue);
+
+    e.stopPropagation();
+    e.preventDefault();
+    
   },
     
   render: function() {

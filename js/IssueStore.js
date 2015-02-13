@@ -1,13 +1,12 @@
 var EventEmitter = require('events'),
-  _ = require('underscore');
+  _ = require('underscore')
+  IssueDispatcher = require('./IssueDispatcher');
 
 var CHANGE_EVENT = 'changed';
 
 var IssueStore = _.extend({}, EventEmitter.prototype, {
 
   issues: [
-    {id:1, title:"YO meeen", code:"REACT-1", reporter:"Benjamin Dreux", status:"TODO", description:"WTF", labels:"ASAP"},
-    {id:2, title:"YO meeen", code:"REACT-2", reporter:"Benjamin Dreux", status:"TODO", description:"WTF", labels:"ASAP"},        
   ], 
 
   emitChange: function() {
@@ -27,11 +26,26 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
   },
   
   addIssue:function(issue){
-    //breakpoint;
     this.issues.push(issue);
+    this.emitChange();
+  },
+  set:function(newIssues){
+    this.issues = newIssues;
     this.emitChange();
   }
 
+});
+
+
+IssueDispatcher.register(function(action){
+  switch(action.type){
+    case 'issue:add':
+      IssueStore.addIssue(action.payload)
+    break;
+    case 'issue:fetch':
+      IssueStore.set(action.payload)
+    break;
+  }
 });
 
 module.exports = IssueStore;
