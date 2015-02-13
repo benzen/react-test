@@ -9,11 +9,11 @@ var issues = [
 
 React.render(
   React.createElement(IssueList, {issues: issues}),
-  document.getElementById('content')
+  document.getElementById('issueList')
 );
 React.render(
   React.createElement(NewIssueForm),
-  document.getElementById('content')
+  document.getElementById('newIssueForm')
 ); 
 
 
