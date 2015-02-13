@@ -14,4 +14,5 @@ var Issue = React.createClass({
     );
   }
 });
+
 module.exports = Issue;
