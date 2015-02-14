@@ -5,21 +5,30 @@ IssueActionCreator = require("./IssueActionCreator");
 
 var NewIssueForm = React.createClass({
   addIssue:function(e){
-    
     var issue = {
       id: IssueStore.getIssues().length + 1,
       title: this.refs.title.getDOMNode().value,
       code: this.refs.code.getDOMNode().value,
       status: this.refs.status.getDOMNode().value,
       labels: this.refs.labels.getDOMNode().value,
+      reporter: this.refs.reporter.getDOMNode().value,
       description: this.refs.description.getDOMNode().value,
     };
- 
     IssueActionCreator.createNewIssue(issue);
+
+    this.clean();
 
     e.stopPropagation();
     e.preventDefault();
-    
+  },
+
+  clean:function(){
+    this.refs.title.getDOMNode().value = "";
+    this.refs.code.getDOMNode().value = "";
+    this.refs.status.getDOMNode().value = "";
+    this.refs.labels.getDOMNode().value = "";
+    this.refs.reporter.getDOMNode().value = "";
+    this.refs.description.getDOMNode().value = "";
   },
     
   render: function() {
@@ -37,7 +46,6 @@ var NewIssueForm = React.createClass({
           <label > Status:  </label>
           <input className="form-control" ref="status"/>
         </div>
-
         <div className="form-group">
           <label > Labels:  </label>
           <input className="form-control" ref="labels"/>
