@@ -29,13 +29,13 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
     this.issues.push(issue);
     this.emitChange();
   },
+
   set:function(newIssues){
     this.issues = newIssues;
     this.emitChange();
   }
 
 });
-
 
 IssueDispatcher.register(function(action){
   switch(action.type){
