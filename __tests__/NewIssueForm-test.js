@@ -1,18 +1,24 @@
-jest.dontMock('../js/NewIssueForm.js');
+var moduleUnderTest = '../js/NewIssueForm' 
+jest.dontMock(moduleUnderTest);
+
+var Testutils, React, NewIssueForm
 
 describe('NewIssueForm', function() {
-  it("is true", function() {
-    var React = require('react/addons');
-    var NewIssueForm = require('../js/NewIssueForm.js');
-    var TestUtils = React.addons.TestUtils;
 
-    form = TestUtils.renderIntoDocument(
+  beforeEach(function(){
+    React = require('react/addons');
+    TestUtils = React.addons.TestUtils;
+    NewIssueForm = require(moduleUnderTest);
+  });
+
+  it("is true", function() {
+    var form = TestUtils.renderIntoDocument(
       <NewIssueForm/>
     );
 
     var button = TestUtils.findRenderedDOMComponentWithTag(form, 'button');
 
-    expect(button).isTruthy()
+    expect(button).toBeTruthy()
 
     }
   );
