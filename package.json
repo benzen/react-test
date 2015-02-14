@@ -35,7 +35,7 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react", "<rootDir>/node_modules/underscore"]
   },
   "devDependencies": {
     "jest-cli": "^0.2.2"
