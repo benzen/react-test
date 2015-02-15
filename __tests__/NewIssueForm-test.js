@@ -52,5 +52,30 @@ describe('NewIssueForm', function() {
       expect(IssueActionCreator.createNewIssue.mock.calls.length).toBe(1)
 
     });
+
+    it("the event sent to action creator contains a field for each input", function(){
+      var form = TestUtils.renderIntoDocument(
+        <NewIssueForm/>
+      );
+      Object.keys(form.refs).forEach(function(refName, index){ 
+        var input = form.refs[refName].getDOMNode();
+        input.value = index + 1
+      });
+
+      var button = TestUtils.findRenderedDOMComponentWithTag(form, 'button');
+      TestUtils.Simulate.submit(button)
+
+      var event = IssueActionCreator.createNewIssue.mock.calls[0][0];
+      expect(event).toEqual({
+        id: 1,
+        title: '1',
+        code: '2',
+        status: '3',
+        labels: '4',
+        reporter: '5',
+        description: '6',
+      })
+  
+    });
   });
 });

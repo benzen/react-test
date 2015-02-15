@@ -44,6 +44,33 @@ Need to update jest config (in pakcage.json) to exclude underscore from mock dep
 
 -> see https://github.com/facebook/jest/issues/216
 
+What is so special about JEST ?
+--------------------------------
+
+* Auto mocking require fare less mocking effort, it could also be customized
+* Offer a dom implementation to render your React components
+* Test a ran in //
+* Comparing json about is easy thanks to pretty printing and colors
+Here is an exemple of jest ouput, lines with ** are infact in red in the console
+```
+- Expected: {
+    | code: '2',
+    | description: '6',
+    | *id: 1,*
+    | labels: '4',
+    | reporter: '5',
+    | status: '3',
+    | title: '1'
+    } toEqual: {
+    | code: '2',
+    | description: '6',
+    | *id: 0,*
+    | labels: '4',
+    | reporter: '5',
+    | status: '3',
+    | title: '1'
+    }
+```
 
 Things to explore
 --------------------
