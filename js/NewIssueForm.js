@@ -48,7 +48,11 @@ var NewIssueForm = React.createClass({
         </div>
         <div className="form-group">
           <label > Labels:  </label>
-          <input className="form-control" ref="labels"/>
+          <select className="form-control" ref="labels">
+            <option>AAA</option>
+            <option>BBB</option>
+            <option>CCC</option>
+          </select>
         </div>
         <div className="form-group">
           <label > Reporter:  </label>

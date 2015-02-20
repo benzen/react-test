@@ -77,7 +77,7 @@ Things to explore
 
 Test with Jest (https://facebook.github.io/jest/)
 Dependecies between stores. Could be to for selected issue, unless you've got better idea
-Is this crazyness working on IE 9
+Is this crazyness working on IE 9 -> Yope
 Working with CSX (coffee) instead of JSX
-How does react work with selectbox ?
+How does react work with selectbox ? -> just like a normal select
 
