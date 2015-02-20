@@ -14,8 +14,11 @@
 
 # Pourquoi ?
 
-Simplifier le *flux* de données dans l'appli
-un update -> demande de repaint
+* un update -> _demande_ de repaint
+* demande de repaint =\=> repaint
+* comme un rendu de page par une api
+* flu_idiffier le passage des données dans l'app
+* Flux -> proposition de pattern
 
 ---
 
@@ -29,11 +32,12 @@ un update -> demande de repaint
 
 # React Vs. Web components
 
-Les techno de base ne sont pas encore supporté nativement aujourd'hui
+Les techno de base ne sont pas supporté nativement aujourd'hui
 
 voir:
 * http://caniuse.com/#search=object.observe
 * http://caniuse.com/#search=shadowdom
+* http://caniuse.com/#search=import
 * http://caniuse.com/#search=template (moins vrai)
 
 Sauf pour chrome
@@ -41,8 +45,9 @@ Sauf pour chrome
 ---
 # Browserify
 
-* Module pour web
-* Pipeline de preprocesseur
+* Module pour Front end js _a la node_
+* Utilisable aujourd'hui, pas quand ES6 sera terminé
+* Pipeline de preprocesseur(jsx, cs, minify, uglify...)
 
 ---
 
@@ -56,3 +61,16 @@ JEST
 * Pas un requis pour tester du REACT
 
 ---
+
+# Alternatives
+
+* Riot.js (Muut, diqus like)
+* Raynos/mercury (Uber) -> semble plus rapide que React
+* OM (Interface Clojure script pour React )
+* ELM (language appart)
+
+---
+
+# Des questions?
+
+___
