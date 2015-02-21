@@ -4,6 +4,10 @@
 
 ---
 
+#  Présentation v1
+
+---
+
 # Virtual DOM
 
 * Version pure JS du DOM
@@ -43,6 +47,7 @@ voir:
 Sauf pour chrome
 
 ---
+
 # Browserify
 
 * Module pour Front end js _a la node_
