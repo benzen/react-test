@@ -180,16 +180,27 @@ var IssueActionCreator = {
 
 # Test
 
+Jest
+
 * Jasmine ++ (it.only, xit, pit, xdescribe)
 * Auto mocking
-* Output de test qui aident
+* Output de comparaison json _A la elixir_
 * Pas un requis pour tester du REACT
+* Implementation de dom
+
+    
+React.addon.TestUtils
+
+* Rendu de composant
+* Simulation d'evenement utilisateur (key, click...)
+* Mock de composant
+
 
 ---
 
 # Exemple de test
 
-``` javascript
+``` jsx
 it.only(trigger an action on click, function(){
   React = require('react/addons');
   TestUtils = React.addons.TestUtils;
@@ -228,3 +239,31 @@ it.only(trigger an action on click, function(){
 ````
 
 ---
+
+# Alternatives
+
+* Riot.js (Muut, diqus like)
+* Raynos/mercury (Uber) -> semble plus rapide que React
+* OM (Interface Clojure script pour React )
+* ELM (language appart)
+
+---
+
+# React Vs. Web components
+
+Les techno de base ne sont pas supporté nativement aujourd'hui
+
+voir:
+* http://caniuse.com/#search=object.observe
+* http://caniuse.com/#search=shadowdom
+* http://caniuse.com/#search=import
+* http://caniuse.com/#search=template (moins vrai)
+
+Sauf pour chrome
+
+---
+
+# Des questions?
+
+___
+
