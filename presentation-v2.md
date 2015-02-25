@@ -2,10 +2,37 @@
 
 [@rimthong](https://twitter.com/rimthong) & [@BenjaminDreux](https://twitter.com/BenjaminDreux)
 
+---
+
+# Qu'est-ce que React?
+
+  * Techno de Facebook.
+  * On l'appelle le V de MVC, mais pas exact.
+  * Ça ressemble un peu aux Web Components.
+
+___
+
+# React est... étrange
+
+  * Controverse sur les bonnes pratiques (onClick)
+  * HTML dans le Javascript (JSX)
+  
+---
+
+# React est... rapide
+
+  * Utilisation de shadow DOM
 
 ---
 
-# Un composant simple
+# Ben et Alex ont testé!
+
+  * Créé une application bugtracker
+  (TODO: petit dessin de la séparation des composantes)
+
+
+---
+# Vue d'un issue
 
 ````javascript
 var Issue = React.createClass({
@@ -24,7 +51,7 @@ var Issue = React.createClass({
 
 ---
 
-# Usage
+# List des issues
 
 ````javascript
 var IssueList  = React.createClass({
@@ -45,7 +72,7 @@ Note: `elm.key` -> faciliter le diff/update pour react
 
 ---
 
-# Un formulaire ?
+# Formulaire d'ajout d'issue
 
 ````javascript
 var NewIssueForm = React.createClass({
@@ -83,7 +110,7 @@ C'est tout pour react, bonne journée
 
 ---
 
-# React
+# Comment on branche le tout?
 
 * Gros trip de Dev
 * render _gratuit_
@@ -120,29 +147,21 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
 
 
 ---
+# Composantes
 
-# Store Reaction
-    
 ````javascript
-IssueDispatcher.register(function(action){
-  switch(action.type){
-    case 'issue:add':
-      IssueStore.addIssue(action.payload)
-    break;
-    case 'issue:fetch':
-      IssueStore.set(action.payload)
-    break;
+var IssueList  = React.createClass({
+  getInitialState: function() { return {issues: IssueStore.getIssues()}; },
+  componentDidMount: function(){ IssueStore.addChangeListener(this.onChange); },
+  componentDidUnmount: function(){ IssueStore.removeChangeListener(this.onChange); },
+  onChange: function(){ this.setState({issues: IssueStore.getIssues()}); },
+  render: function(){
+    var elements = this.state.issues.map(function(issue){
+      return <li key={issue.id}> <Issue issue={issue}/> </li>
+    });
+    return <ul> {elements} </ul>
   }
 });
-````
-
----
-
-# Dispatcher
-
-```` javascript
-var Dispatcher = require("flux").Dispatcher;
-var IssueDispatcher = _.extend( new Dispatcher(), {});
 ````
 
 ---
@@ -169,12 +188,36 @@ var IssueActionCreator = {
   }
 };
 ````
-
 ---
 
 # Interface client API
 
     // INSERT YOUR CODE HERE
+
+---
+
+# Dispatcher
+
+```` javascript
+var Dispatcher = require("flux").Dispatcher;
+var IssueDispatcher = _.extend( new Dispatcher(), {});
+````
+---
+
+# Store Reaction
+    
+````javascript
+IssueDispatcher.register(function(action){
+  switch(action.type){
+    case 'issue:add':
+      IssueStore.addIssue(action.payload)
+    break;
+    case 'issue:fetch':
+      IssueStore.set(action.payload)
+    break;
+  }
+});
+````
 
 ---
 
