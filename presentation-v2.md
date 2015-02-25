@@ -22,7 +22,7 @@
 
 # React est... rapide
 
-  * Utilisation de shadow DOM
+  * Utilisation de virtual DOM
 
 ---
 
