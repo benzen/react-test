@@ -1,3 +1,4 @@
+
 # React
 
 [@rimthong](https://twitter.com/rimthong) & [@BenjaminDreux](https://twitter.com/BenjaminDreux)
@@ -6,17 +7,17 @@
 
 # Qu'est-ce que React?
 
-  * Techno de Facebook.
-  * On l'appelle le V de MVC, mais pas exact.
-  * Ça ressemble un peu aux Web Components.
+* Techno de Facebook.
+* On l'appelle le V de MVC, mais pas exact.
+* Ça ressemble un peu aux Web Components.
 
-___
+---
 
 # React est... étrange
 
   * Controverse sur les bonnes pratiques (onClick)
   * HTML dans le Javascript (JSX)
-  
+
 ---
 
 # React est... rapide
@@ -30,8 +31,8 @@ ___
   * Créé une application bugtracker
   (TODO: petit dessin de la séparation des composantes)
 
-
 ---
+
 # Vue d'un issue
 
 ````javascript
@@ -147,6 +148,7 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
 
 
 ---
+
 # Composantes
 
 ````javascript
@@ -188,6 +190,7 @@ var IssueActionCreator = {
   }
 };
 ````
+
 ---
 
 # Interface client API
@@ -202,6 +205,7 @@ var IssueActionCreator = {
 var Dispatcher = require("flux").Dispatcher;
 var IssueDispatcher = _.extend( new Dispatcher(), {});
 ````
+
 ---
 
 # Store Reaction
@@ -307,6 +311,3 @@ Sauf pour chrome
 ---
 
 # Des questions?
-
-___
-
