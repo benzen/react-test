@@ -52,7 +52,7 @@ var Issue = React.createClass({
 
 ---
 
-# List des issues
+# Liste des issues
 
 ````javascript
 var IssueList  = React.createClass({
@@ -73,35 +73,10 @@ Note: `elm.key` -> faciliter le diff/update pour react
 
 ---
 
-# Formulaire d'ajout d'issue
 
-````javascript
-var NewIssueForm = React.createClass({
-  addIssue:function(e){
-    var issue = {title: this.refs.title.getDOMNode().value};
-    IssueActionCreator.createNewIssue(issue);
-    e.stopPropagation(); e.preventDefault();
-  },
-  render: function() {
-    return (
-      <form className="new-issue-form" onSubmit={this.addIssue}>
-        <div className="form-group">
-          <label > Title: </label>
-          <input className="form-control" ref="title" />
-        </div>
-        <button>Add</button>
-    </form>
-    );
-}});
-````
+C'est tout pour React
 
-Note: `@ref="title"` -> `this.refs.title.getDOMNode()`
-
-
----
-
-C'est tout pour react, bonne journée
-
+# bonne journée
 
 ---
 
@@ -119,9 +94,35 @@ C'est tout pour react, bonne journée
 
 ---
 
-# What The Flux??
+# What the Flux??
 
-TODO Ajouter graph original de flux
+![Flux](flux-diagram.png)
+
+---
+
+# Dispatcher
+
+```` javascript
+var Dispatcher = require("flux").Dispatcher;
+var IssueDispatcher = _.extend( new Dispatcher(), {});
+````
+
+---
+
+# Reaction du Store
+    
+````javascript
+IssueDispatcher.register(function(action){
+  switch(action.type){
+    case 'issue:add':
+      IssueStore.addIssue(action.payload)
+    break;
+    case 'issue:fetch':
+      IssueStore.set(action.payload)
+    break;
+  }
+});
+````
 
 ---
 
@@ -152,19 +153,27 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
 # Composantes
 
 ````javascript
-var IssueList  = React.createClass({
-  getInitialState: function() { return {issues: IssueStore.getIssues()}; },
-  componentDidMount: function(){ IssueStore.addChangeListener(this.onChange); },
-  componentDidUnmount: function(){ IssueStore.removeChangeListener(this.onChange); },
-  onChange: function(){ this.setState({issues: IssueStore.getIssues()}); },
-  render: function(){
-    var elements = this.state.issues.map(function(issue){
-      return <li key={issue.id}> <Issue issue={issue}/> </li>
-    });
-    return <ul> {elements} </ul>
-  }
-});
+var NewIssueForm = React.createClass({
+  addIssue:function(e){
+    var issue = {title: this.refs.title.getDOMNode().value};
+    IssueActionCreator.createNewIssue(issue);
+    e.stopPropagation(); e.preventDefault();
+  },
+  render: function() {
+    return (
+      <form className="new-issue-form" onSubmit={this.addIssue}>
+        <div className="form-group">
+          <label > Title: </label>
+          <input className="form-control" ref="title" />
+        </div>
+        <button>Add</button>
+    </form>
+    );
+}});
 ````
+
+Note: `@ref="title"` -> `this.refs.title.getDOMNode()`
+
 
 ---
 
@@ -181,7 +190,8 @@ var IssueActionCreator = {
   },
   fetchIssues:function(){
     // Appel au backend
-    var issues = [{id:1, title:"YO meeen"},{id:2, title:"YO meeen"}]; 
+    var issues = [{id:1, title:"Changer la couleur des bouton"},
+                  {id:2, title:"J'aime pas la couleur du bouton"}]; 
     
     IssueDispatcher.dispatch({
       type:'issue:fetch',
@@ -199,29 +209,10 @@ var IssueActionCreator = {
 
 ---
 
-# Dispatcher
+# Flux, C'est juste ça !!
 
-```` javascript
-var Dispatcher = require("flux").Dispatcher;
-var IssueDispatcher = _.extend( new Dispatcher(), {});
-````
+![Flux](flux-diagram-easy.jpg)
 
----
-
-# Store Reaction
-    
-````javascript
-IssueDispatcher.register(function(action){
-  switch(action.type){
-    case 'issue:add':
-      IssueStore.addIssue(action.payload)
-    break;
-    case 'issue:fetch':
-      IssueStore.set(action.payload)
-    break;
-  }
-});
-````
 
 ---
 
@@ -248,7 +239,10 @@ React.addon.TestUtils
 # Exemple de test
 
 ``` jsx
+jest.dontMock('../js/NewIssueForm');
+
 it.only(trigger an action on click, function(){
+
   React = require('react/addons');
   TestUtils = React.addons.TestUtils;
 
@@ -267,7 +261,7 @@ it.only(trigger an action on click, function(){
 # Browserify
 
 * Module _A la node_ dans le frontend aujourd'hui
-* Pipline de transformation de code(jsx, coffee, minify, uglify...)
+* Pipline de transformation de code (jsx, coffee, minify, uglify...)
 * package.json: 
 
 ````javascript    
@@ -289,18 +283,26 @@ it.only(trigger an action on click, function(){
 
 # Alternatives
 
-* Riot.js (Muut, diqus like)
-* Raynos/mercury (Uber) -> semble plus rapide que React
-* OM (Interface Clojure script pour React )
+* Raynos/mercury (Uber) -> immutablilité par défaut
+* Riot.js (Muut, disqus like) -> Diff simpliste
+* Mithril -> Angular avec Virtual DOM
+* Ractive -> Backbone avec Virtual DOM
+* OM ou Quiescent (Interface Clojure script pour React )
 * ELM (language appart)
+
+Note: 
+Riot diff simpliste
+
+Mercury & Mirthill semble 4 à 5 fois plus rapide que React
+
+Ractive semble 2 fois plus lent que React
 
 ---
 
 # React Vs. Web components
 
-Les techno de base ne sont pas supporté nativement aujourd'hui
+Les techno de base ne sont pas supporté nativement aujourd'hui, voir:
 
-voir:
 * http://caniuse.com/#search=object.observe
 * http://caniuse.com/#search=shadowdom
 * http://caniuse.com/#search=import
