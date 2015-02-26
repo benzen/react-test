@@ -3,6 +3,8 @@
 
 [@rimthong](https://twitter.com/rimthong) & [@BenjaminDreux](https://twitter.com/BenjaminDreux)
 
+Note: Alex
+
 ---
 
 # Qu'est-ce que React?
@@ -29,6 +31,8 @@
 # Faisons une app!
 
 ![Issues](issues.png)
+
+Note: Ben
 
 ---
 
@@ -117,13 +121,19 @@ C'est tout pour React
 ... presque
 
 
+Note: Alex
+
 ---
 
-# Comment on branche le tout?
-
+# React
 * Gros trip de Dev
 * render _gratuit_
 * permet le pattern flux
+
+
+# Flux
+* Comment on branche le tout?
+
 
 ---
 
@@ -137,7 +147,7 @@ C'est tout pour React
 
 ```` javascript
 var Dispatcher = require("flux").Dispatcher;
-var IssueDispatcher = _.extend( new Dispatcher(), {});
+var IssueDispatcher = _.extend(new Dispatcher(), {});
 ````
 
 ---
@@ -148,10 +158,10 @@ var IssueDispatcher = _.extend( new Dispatcher(), {});
 IssueDispatcher.register(function(action){
   switch(action.type){
     case 'issue:add':
-      IssueStore.addIssue(action.payload)
+      IssueStore.addIssue(action.payload);
     break;
     case 'issue:fetch':
-      IssueStore.set(action.payload)
+      IssueStore.set(action.payload);
     break;
   }
 });
@@ -266,6 +276,8 @@ React.addon.TestUtils
 * Simulation d'evenement utilisateur (key, click...)
 * Mock de composant
 
+ Note: Ben
+ 
 
 ---
 
@@ -293,7 +305,7 @@ it.only(trigger an action on click, function(){
 
 # Browserify
 
-* Module _A la node_ dans le frontend aujourd'hui
+* Module _A la node_ dans le frontend _aujourd'hui_
 * Pipline de transformation de code (jsx, coffee, minify, uglify...)
 * package.json: 
 
