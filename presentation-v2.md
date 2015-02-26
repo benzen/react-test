@@ -7,28 +7,41 @@
 
 # Qu'est-ce que React?
 
-* Techno de Facebook.
-* On l'appelle le V de MVC, mais pas exact.
-* Ça ressemble un peu aux Web Components.
+* Techno de Facebook
+* V de MVC
+* Similaire aux Web Components
+
+Note: Facebook l'utilise dans ses projets en prod: Messagerie, Instagram entièrement en react. React fait juste du visuel, il se fout un peu du reste de l'appli, donc on peut l'introduire petit à petit dans des apps. Par exemple, la messagerie facebook. React encourage la déconstruction d'app en plusieurs composantes réutilisables qui peuvent être assemblées. La gestion des styles n'est pas aussi naturelle que dans le cas du Shadow DOM.
 
 ---
 
-# React est... étrange
+# React fait réagir
 
-  * Controverse sur les bonnes pratiques (onClick)
-  * HTML dans le Javascript (JSX)
+  ![Reaction](http://i.imgur.com/tfyHIaB.gif+)
+
+  * Controverse sur les bonnes pratiques
+  * Mix de présentation + code
+
+Note: Facebook s'est amusé à redéfinir les bonnes pratiques. OnClick, OnSubmit, directement dans les tags HTML et les composantes sont programmées en JSX, qui est du Javascript, mais qui peut aussi contenir du HTML. 
 
 ---
 
 # React est... rapide
 
-  * Utilisation de virtual DOM
+  ![Speed](speed.png)
+
+  * DOM Virtuel
+  * Binding unidirectionel
+
+Note: Modifs au virtual dom, diff des composantes, render du real dom. Permet aussi l'isomorphisme (pas dans la présentation.) Le DOM virtuel est composé d'éléments beaucoup plus simples, sérialisable (non circulaires).
 
 ---
 
 # Faisons une app!
 
 ![Issues](issues.png)
+
+Note: Voici l'app décomposée en composantes.
 
 ---
 
