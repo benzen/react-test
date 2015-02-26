@@ -26,10 +26,9 @@
 
 ---
 
-# Ben et Alex ont testé!
+# Faisons une app!
 
-  * Créé une application bugtracker
-  (TODO: petit dessin de la séparation des composantes)
+![Issues](issues.png)
 
 ---
 
@@ -56,10 +55,7 @@ var Issue = React.createClass({
 
 ````javascript
 var IssueList  = React.createClass({
-  getInitialState: function() { return {issues: IssueStore.getIssues()}; },
-  componentDidMount: function(){ IssueStore.addChangeListener(this.onChange); },
-  componentDidUnmount: function(){ IssueStore.removeChangeListener(this.onChange); },
-  onChange: function(){ this.setState({issues: IssueStore.getIssues()}); },
+  getInitialState: function() { return {issues: [{id:1, ...}]}; },
   render: function(){
     var elements = this.state.issues.map(function(issue){
       return <li key={issue.id}> <Issue issue={issue}/> </li>
@@ -69,10 +65,47 @@ var IssueList  = React.createClass({
 });
 ````
 
-Note: `elm.key` -> faciliter le diff/update pour react
+Note: `elememt key` -> faciliter le diff/update pour react
 
 ---
 
+# Formulaire
+
+````javascript
+var NewIssueForm = React.createClass({
+  addIssue:function(e){
+    var issue = {
+      title: this.refs.title.getDOMNode().value,
+      ...
+    };
+
+    this.clean();
+    e.stopPropagation();
+    e.preventDefault();
+    //Then do something
+  },
+
+  clean:function(){
+    this.refs.title.getDOMNode().value = "";
+    ...
+  },
+    
+  render: function() {
+    return (
+      <form className="new-issue-form" onSubmit={this.addIssue}>
+        <div className="form-group">
+          <label > Title: </label>
+          <input className="form-control" ref="title" />
+        </div>
+        ...
+        <button>Add</button>
+    </form>
+    );
+  }
+});
+````
+
+---
 
 C'est tout pour React
 
