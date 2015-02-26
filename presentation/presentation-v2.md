@@ -42,7 +42,7 @@ Note: Ben
 var Issue = React.createClass({
   render: function() {
     return (
-      <div className="issue">
+      <div>
         <div>Title: {this.props.issue.title}</div>
         <div>Status: {this.props.issue.status}</div>
         <div>Reporter: {this.props.issue.reporter}</div>
@@ -78,24 +78,11 @@ Note: `elememt key` -> faciliter le diff/update pour react
 ````javascript
 var NewIssueForm = React.createClass({
   addIssue:function(e){
-    var issue = {
-      title: this.refs.title.getDOMNode().value,
-      ...
-    };
-
-    this.clean();
-    e.stopPropagation();
-    e.preventDefault();
-    //Then do something
-  },
-
-  clean:function(){
-    this.refs.title.getDOMNode().value = "";
+    var issue = {title: this.refs.title.getDOMNode().value};
     ...
   },
-    
   render: function() {
-    return (
+    return 
       <form className="new-issue-form" onSubmit={this.addIssue}>
         <div className="form-group">
           <label > Title: </label>
@@ -104,7 +91,6 @@ var NewIssueForm = React.createClass({
         ...
         <button>Add</button>
     </form>
-    );
   }
 });
 ````
