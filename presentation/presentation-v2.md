@@ -3,6 +3,8 @@
 
 [@rimthong](https://twitter.com/rimthong) & [@BenjaminDreux](https://twitter.com/BenjaminDreux)
 
+Note: Alex
+
 ---
 
 # Qu'est-ce que React?
@@ -51,7 +53,7 @@ Note: Voici l'app décomposée en composantes.
 var Issue = React.createClass({
   render: function() {
     return (
-      <div className="issue">
+      <div>
         <div>Title: {this.props.issue.title}</div>
         <div>Status: {this.props.issue.status}</div>
         <div>Reporter: {this.props.issue.reporter}</div>
@@ -87,24 +89,11 @@ Note: `elememt key` -> faciliter le diff/update pour react
 ````javascript
 var NewIssueForm = React.createClass({
   addIssue:function(e){
-    var issue = {
-      title: this.refs.title.getDOMNode().value,
-      ...
-    };
-
-    this.clean();
-    e.stopPropagation();
-    e.preventDefault();
-    //Then do something
-  },
-
-  clean:function(){
-    this.refs.title.getDOMNode().value = "";
+    var issue = {title: this.refs.title.getDOMNode().value};
     ...
   },
-    
   render: function() {
-    return (
+    return 
       <form className="new-issue-form" onSubmit={this.addIssue}>
         <div className="form-group">
           <label > Title: </label>
@@ -113,7 +102,6 @@ var NewIssueForm = React.createClass({
         ...
         <button>Add</button>
     </form>
-    );
   }
 });
 ````
@@ -130,13 +118,19 @@ C'est tout pour React
 ... presque
 
 
+Note: Alex
+
 ---
 
-# Comment on branche le tout?
-
+# React
 * Gros trip de Dev
 * render _gratuit_
 * permet le pattern flux
+
+
+# Flux
+* Comment on branche le tout?
+
 
 ---
 
@@ -150,7 +144,7 @@ C'est tout pour React
 
 ```` javascript
 var Dispatcher = require("flux").Dispatcher;
-var IssueDispatcher = _.extend( new Dispatcher(), {});
+var IssueDispatcher = _.extend(new Dispatcher(), {});
 ````
 
 ---
@@ -161,10 +155,10 @@ var IssueDispatcher = _.extend( new Dispatcher(), {});
 IssueDispatcher.register(function(action){
   switch(action.type){
     case 'issue:add':
-      IssueStore.addIssue(action.payload)
+      IssueStore.addIssue(action.payload);
     break;
     case 'issue:fetch':
-      IssueStore.set(action.payload)
+      IssueStore.set(action.payload);
     break;
   }
 });
@@ -279,6 +273,8 @@ React.addon.TestUtils
 * Simulation d'evenement utilisateur (key, click...)
 * Mock de composant
 
+ Note: Ben
+ 
 
 ---
 
@@ -306,7 +302,7 @@ it.only(trigger an action on click, function(){
 
 # Browserify
 
-* Module _A la node_ dans le frontend aujourd'hui
+* Module _A la node_ dans le frontend _aujourd'hui_
 * Pipline de transformation de code (jsx, coffee, minify, uglify...)
 * package.json: 
 
