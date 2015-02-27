@@ -127,6 +127,7 @@ Note: Alex
 * render _gratuit_
 * permet le pattern flux
 
+------
 
 # Flux
 * Comment on branche le tout?
@@ -249,9 +250,9 @@ var IssueActionCreator = {
 
 ---
 
-# Flux, C'est juste ça !!
+# Flux pour les nuls
 
-![Flux](flux-diagram-easy.jpg)
+![Flux](flux.png)
 
 
 ---
