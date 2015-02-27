@@ -43,7 +43,7 @@ Note: Modifs au virtual dom, diff des composantes, render du real dom. Permet au
 
 ![Issues](issues.png)
 
-Note: Voici l'app décomposée en composantes.
+Note: On a décidé de faire une web app simple. Premièrement, on l'a découpé en composantes.
 
 ---
 
@@ -123,15 +123,19 @@ Note: Alex
 ---
 
 # React
-* Gros trip de Dev
-* render _gratuit_
-* permet le pattern flux
+* La vue seulement
+* Render gratuit
+* Pattern Flux
 
-------
+Note: La partie React n'est seulement que la vue, les composantes. Comment les faire réagir entre elles, modifier leur état pour les faire renderer.
+
+---
 
 # Flux
-* Comment on branche le tout?
+* Seulement un pattern.
+* Permet d'orchestrer les composantes React.
 
+Note: Il ne s'agit que d'un pattern, d'une recommandation architecturale. Existe des libs qui l'implémente mais on va juste utiliser la lib Flux de facebook, qui est très minimaliste.
 
 ---
 
@@ -139,31 +143,7 @@ Note: Alex
 
 ![Flux](flux-diagram.png)
 
----
-
-# Dispatcher
-
-```` javascript
-var Dispatcher = require("flux").Dispatcher;
-var IssueDispatcher = _.extend(new Dispatcher(), {});
-````
-
----
-
-# Reaction du Store
-    
-````javascript
-IssueDispatcher.register(function(action){
-  switch(action.type){
-    case 'issue:add':
-      IssueStore.addIssue(action.payload);
-    break;
-    case 'issue:fetch':
-      IssueStore.set(action.payload);
-    break;
-  }
-});
-````
+Note: C'est un peu intimidant et ça prend un peu de boiler plate, mais on va regarder chaque étape.
 
 ---
 
@@ -188,10 +168,37 @@ var IssueStore = _.extend({}, EventEmitter.prototype, {
 });
 ````
 
+Note: On commence par le store, la mémoire, le cerveau de l'application. Le store peut émettre des évènements.
 
 ---
 
-# Composantes
+# Composantes (Vue)
+
+````javascript
+var IssueList  = React.createClass({
+  getInitialState: function() {
+    return {issues: IssueStore.getIssues()};
+  },
+  componentDidMount: function(){
+    IssueStore.addChangeListener(this.onChange);
+  },
+  componentDidUnmount: function(){
+    IssueStore.removeChangeListener(this.onChange);
+  },
+  onChange: function(){
+    this.setState({issues: IssueStore.getIssues()});
+  },
+  render: function(){
+    ...
+  }
+});
+````
+
+Note: Voici comment la composante React interagit avec le IssueStore.
+
+---
+
+# Composantes (Formulaire)
 
 ````javascript
 var NewIssueForm = React.createClass({
@@ -213,7 +220,7 @@ var NewIssueForm = React.createClass({
 }});
 ````
 
-Note: `@ref="title"` -> `this.refs.title.getDOMNode()`
+Note: Voici comment une vue react réagit à un évènement utilisateur (onSubmit)
 
 
 ---
@@ -242,14 +249,47 @@ var IssueActionCreator = {
 };
 ````
 
+Note: Le action creator peut soit communiquer avec l'interface API, ou créer des messages qui sont envoyés au dispatcher. Fake le backend dans fetchIssues. Les messages contiennent habituellement un type et un payload.
+
 ---
 
 # Interface client API
 
     // INSERT YOUR CODE HERE
 
+Note: Nous n'avons pas fait de backend pour notre test, mais on aurait une partie API client ici.
+
 ---
 
+# Dispatcher
+
+```` javascript
+var Dispatcher = require("flux").Dispatcher;
+var IssueDispatcher = _.extend(new Dispatcher(), {});
+````
+
+Note: Le dispatcher ne fait pas grand chose, il ne fait que crier des informations, dans ce cas, il broadcast le message.
+
+---
+
+# Reaction du Store
+    
+````javascript
+IssueDispatcher.register(function(action){
+  switch(action.type){
+    case 'issue:add':
+      IssueStore.addIssue(action.payload);
+    break;
+    case 'issue:fetch':
+      IssueStore.set(action.payload);
+    break;
+  }
+});
+````
+
+Note: Et finalement, voici comment le store réagit aux évènements qui passent par le dispatcher
+
+---
 # Flux pour les nuls
 
 ![Flux](flux.png)
