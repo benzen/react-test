@@ -1,12 +1,357 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
-  </head>
-  <body>
-    <div id="issueList"></div>
-    <div id="newIssueForm"></div>
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Reveal.js</title>
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+          document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+    </head>
+    <body>
+
+        <div class="reveal">
+            <div class="slides"><section  data-markdown><script type="text/template">
+# React
+
+[@rimthong](https://twitter.com/rimthong) & [@BenjaminDreux](https://twitter.com/BenjaminDreux)
+
+<aside class="notes" data-markdown>Alex</aside></script></section><section  data-markdown><script type="text/template">
+# Qu'est-ce que React?
+
+* Techno de Facebook.
+* On l'appelle le V de MVC, mais pas exact.
+* Ça ressemble un peu aux Web Components.
+</script></section><section  data-markdown><script type="text/template">
+# React est... étrange
+
+  * Controverse sur les bonnes pratiques (onClick)
+  * HTML dans le Javascript (JSX)
+</script></section><section  data-markdown><script type="text/template">
+# React est... rapide
+
+  * Utilisation de virtual DOM
+</script></section><section  data-markdown><script type="text/template">
+# Faisons une app!
+
+![Issues](issues.png)
+
+<aside class="notes" data-markdown>Ben</aside></script></section><section  data-markdown><script type="text/template">
+# Vue d'un issue
+
+````javascript
+var Issue = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <div>Title: {this.props.issue.title}</div>
+        <div>Status: {this.props.issue.status}</div>
+        <div>Reporter: {this.props.issue.reporter}</div>
+        <div>Description: {this.props.issue.description}</div>
+      </div>
+    );
+  }
+});
+````
+</script></section><section  data-markdown><script type="text/template">
+# Liste des issues
+
+````javascript
+var IssueList  = React.createClass({
+  getInitialState: function() { return {issues: [{id:1, ...}]}; },
+  render: function(){
+    var elements = this.state.issues.map(function(issue){
+      return <li key={issue.id}> <Issue issue={issue}/> </li>
+    });
+    return <ul> {elements} </ul>
+  }
+});
+````
+
+<aside class="notes" data-markdown>`elememt key` -> faciliter le diff/update pour react</aside></script></section><section  data-markdown><script type="text/template">
+# Formulaire
+
+````javascript
+var NewIssueForm = React.createClass({
+  addIssue:function(e){
+    var issue = {title: this.refs.title.getDOMNode().value};
+    ...
+  },
+  render: function() {
+    return 
+      <form className="new-issue-form" onSubmit={this.addIssue}>
+        <div className="form-group">
+          <label > Title: </label>
+          <input className="form-control" ref="title" />
+        </div>
+        ...
+        <button>Add</button>
+    </form>
+  }
+});
+````
+</script></section><section  data-markdown><script type="text/template">
+C'est tout pour React
+
+# bonne journée
+</script></section><section  data-markdown><script type="text/template">
+
+... presque
+
+
+<aside class="notes" data-markdown>Alex</aside></script></section><section  data-markdown><script type="text/template">
+# React
+* Gros trip de Dev
+* render _gratuit_
+* permet le pattern flux
+
+
+# Flux
+* Comment on branche le tout?
+
+</script></section><section  data-markdown><script type="text/template">
+# What the Flux??
+
+![Flux](flux-diagram.png)
+</script></section><section  data-markdown><script type="text/template">
+# Dispatcher
+
+```` javascript
+var Dispatcher = require("flux").Dispatcher;
+var IssueDispatcher = _.extend(new Dispatcher(), {});
+````
+</script></section><section  data-markdown><script type="text/template">
+# Reaction du Store
     
-    <script src="bundle.js"></script>        
-  </body>
+````javascript
+IssueDispatcher.register(function(action){
+  switch(action.type){
+    case 'issue:add':
+      IssueStore.addIssue(action.payload);
+    break;
+    case 'issue:fetch':
+      IssueStore.set(action.payload);
+    break;
+  }
+});
+````
+</script></section><section  data-markdown><script type="text/template">
+# Store
+
+````javascript
+var CHANGE_EVENT = 'changed';
+var IssueStore = _.extend({}, EventEmitter.prototype, {
+  issues: [], 
+  emitChange: function() {this.emit(CHANGE_EVENT);},
+  addChangeListener: function(callback){this.on(CHANGE_EVENT, callback);},
+  removeChangeListener: function(callback){this.removeListener(CHANGE_EVENT, callback); },
+  getIssues: function(){return this.issues},
+  addIssue:function(issue){
+    this.issues.push(issue);
+    this.emitChange();
+  },
+  set:function(newIssues){
+    this.issues = newIssues;
+    this.emitChange();
+  }
+});
+````
+
+</script></section><section  data-markdown><script type="text/template">
+# Composantes
+
+````javascript
+var NewIssueForm = React.createClass({
+  addIssue:function(e){
+    var issue = {title: this.refs.title.getDOMNode().value};
+    IssueActionCreator.createNewIssue(issue);
+    e.stopPropagation(); e.preventDefault();
+  },
+  render: function() {
+    return (
+      <form className="new-issue-form" onSubmit={this.addIssue}>
+        <div className="form-group">
+          <label > Title: </label>
+          <input className="form-control" ref="title" />
+        </div>
+        <button>Add</button>
+    </form>
+    );
+}});
+````
+
+<aside class="notes" data-markdown>`@ref="title"` -> `this.refs.title.getDOMNode()`</aside></script></section><section  data-markdown><script type="text/template">
+# Action creator
+
+```` javascript
+var IssueActionCreator = {
+  createNewIssue:function(issue){
+    //Appel au backend
+    IssueDispatcher.dispatch({
+      type:"issue:add",
+      payload: issue
+    });
+  },
+  fetchIssues:function(){
+    // Appel au backend
+    var issues = [{id:1, title:"Changer la couleur des bouton"},
+                  {id:2, title:"J'aime pas la couleur du bouton"}]; 
+    
+    IssueDispatcher.dispatch({
+      type:'issue:fetch',
+      payload: issues
+    });
+  }
+};
+````
+</script></section><section  data-markdown><script type="text/template">
+# Interface client API
+
+    // INSERT YOUR CODE HERE
+</script></section><section  data-markdown><script type="text/template">
+# Flux, C'est juste ça !!
+
+![Flux](flux-diagram-easy.jpg)
+
+</script></section><section  data-markdown><script type="text/template">
+# Test
+
+Jest
+
+* Jasmine ++ (it.only, xit, pit, xdescribe)
+* Auto mocking
+* Output de comparaison json _A la elixir_
+* Pas un requis pour tester du REACT
+* Implementation de dom
+
+    
+React.addon.TestUtils
+
+* Rendu de composant
+* Simulation d'evenement utilisateur (key, click...)
+* Mock de composant
+
+ <aside class="notes" data-markdown>Ben</aside></script></section><section  data-markdown><script type="text/template">
+# Exemple de test
+
+``` jsx
+jest.dontMock('../js/NewIssueForm');
+
+it.only(trigger an action on click, function(){
+
+  React = require('react/addons');
+  TestUtils = React.addons.TestUtils;
+
+  var form = TestUtils.renderIntoDocument(<NewIssueForm/>);
+  var button = TestUtils.findRenderedDOMComponentWithTag(form, 'button');
+
+  TestUtils.Simulate.submit(button)
+
+  expect(IssueActionCreator.createNewIssue.mock.calls.length).toBe(1)
+});
+
+```
+</script></section><section  data-markdown><script type="text/template">
+# Browserify
+
+* Module _A la node_ dans le frontend _aujourd'hui_
+* Pipline de transformation de code (jsx, coffee, minify, uglify...)
+* package.json: 
+
+````javascript    
+  "scripts": {
+    "start": "watchify -o bundle.js -v -d js/*",
+    "test": "jest",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > bundle.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "envify",
+      "reactify"
+    ]
+  },
+
+````
+</script></section><section  data-markdown><script type="text/template">
+# Alternatives
+
+* Raynos/mercury (Uber) -> immutablilité par défaut
+* Riot.js (Muut, disqus like) -> Diff simpliste
+* Mithril -> Angular avec Virtual DOM
+* Ractive -> Backbone avec Virtual DOM
+* OM ou Quiescent (Interface Clojure script pour React )
+* ELM (language appart)
+
+<aside class="notes" data-markdown>Riot diff simpliste
+
+Mercury & Mirthill semble 4 à 5 fois plus rapide que React
+
+Ractive semble 2 fois plus lent que React</aside></script></section><section  data-markdown><script type="text/template">
+# React Vs. Web components
+
+Les techno de base ne sont pas supporté nativement aujourd'hui, voir:
+
+* http://caniuse.com/#search=object.observe
+* http://caniuse.com/#search=shadowdom
+* http://caniuse.com/#search=import
+* http://caniuse.com/#search=template (moins vrai)
+
+Sauf pour chrome
+</script></section><section  data-markdown><script type="text/template">
+# Des questions?
+</script></section></div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            function extend() {
+              var target = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var source = arguments[i];
+                for (var key in source) {
+                  if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                  }
+                }
+              }
+              return target;
+            }
+
+            // Optional libraries used to extend on reveal.js
+            var deps = [
+              { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+              { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+              { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+              { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+              { src: 'plugin/math/math.js', async: true }
+            ];
+
+            // default options to init reveal.js
+            var defaultOptions = {
+              controls: true,
+              progress: true,
+              history: true,
+              center: true,
+              transition: 'default',
+              dependencies: deps
+            };
+
+            // options from URL query string
+            var queryOptions = Reveal.getQueryHash() || {};
+
+            var options = {};
+            options = extend(defaultOptions, options, queryOptions);
+            Reveal.initialize(options);
+        </script>
+    </body>
 </html>
+
